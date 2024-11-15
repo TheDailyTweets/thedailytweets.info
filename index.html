@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Daily Tweet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>The Best of Twitter, <br> Fresh Every Day</h1>
+  </header>
+
+  <!-- Tweets Section -->
+  <section class="tweets-section">
+    <!-- Example of a tweet post -->
+    <div class="tweet">
+      <img src="https://via.placeholder.com/100" alt="Profile Picture">
+      <div class="tweet-content">
+        <p><strong>Today</strong></p>
+        <p>🌟 Checkout The Daily Tweet for today’s top tweets that everyone’s talking about! From viral moments to trending topics, we’ve got it all. 🌟</p>
+        <br> <p>#TopTweets #TrendingNow #DailyTweets #TwitterHighlights</p>
+      </div>
+    </div>
+
+    <!-- Add more tweets here in the same format as above -->
+  </section>
+
+  <footer>
+    <p> 2024 The Daily Tweet by Mohammed Famid. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript to Load Tweets from tweets.json -->
+  <script>
+ async function loadTweets() {
+  try {
+    const response = await fetch('tweets.json');
+    if (!response.ok) throw new Error('Network response was not ok');
+    
+    const tweets = await response.json();
+    const tweetsSection = document.querySelector('.tweets-section');
+
+    tweetsSection.innerHTML = ''; // Clear current content
+
+    tweets.forEach(tweet => {
+      const tweetElement = document.createElement('div');
+      tweetElement.classList.add('tweet');
+      tweetElement.innerHTML = `
+        <img class="profile-picture" src="${tweet.profileImage}" alt="Profile Picture">
+        <div class="tweet-content">
+          <p><strong>${tweet.date}</strong></p>
+          <p>${tweet.text}</p>
+          <p>${tweet.hashtags}</p>
+        </div>
+      `;
+      tweetsSection.appendChild(tweetElement);
+    });
+  } catch (error) {
+    console.error('Error loading JSON data:', error);
+  }
+}
+
+loadTweets();
+
+  </script>
+</body>
+</html>
